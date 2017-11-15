@@ -20,6 +20,6 @@ class EscmController < BarclampController
   protected
 
   def initialize_service
-    @service_object = EscmService.new logger
+    @service_object = EscmService.new
   end
 end

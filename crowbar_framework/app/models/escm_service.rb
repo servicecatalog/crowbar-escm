@@ -15,9 +15,9 @@
 #
 
 class EscmService < PacemakerServiceObject
-  def initialize(thelogger)
+  def initialize(thelogger = nil)
+    super(thelogger)
     @bc_name = "escm"
-    @logger = thelogger
   end
 
   class << self
