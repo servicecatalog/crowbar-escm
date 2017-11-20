@@ -1,4 +1,6 @@
 #
+# Copyright FUJITSU LIMITED 2017
+#
 # Copyright 2011-2013, Dell
 # Copyright 2013-2015, SUSE Linux GmbH
 #
