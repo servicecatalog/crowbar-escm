@@ -9,11 +9,7 @@ originally developed by the [Dell CloudEdge Solutions Team](http://dell.com/open
 
 ## Badges
 
-[![Build Status](https://travis-ci.org/crowbar/crowbar-escm.svg?branch=master)](https://travis-ci.org/crowbar/crowbar-escm)
-[![Code Climate](https://codeclimate.com/github/crowbar/crowbar-escm/badges/gpa.svg)](https://codeclimate.com/github/crowbar/crowbar-escm)
-[![Test Coverage](https://codeclimate.com/github/crowbar/crowbar-escm/badges/coverage.svg)](https://codeclimate.com/github/crowbar/crowbar-escm)
-[![Dependency Status](https://gemnasium.com/crowbar/crowbar-escm.svg)](https://gemnasium.com/crowbar/crowbar-escm)
-[![Join the chat at https://gitter.im/crowbar/crowbar](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/crowbar/crowbar)
+[![Build Status](https://travis-ci.org/servicecatalog/crowbar-escm.svg?branch=master)](https://travis-ci.org/servicecatalog/crowbar-escm)
 
 ## Contact
 
