@@ -1,8 +1,7 @@
+#!/bin/sh
 #
 # Copyright FUJITSU LIMITED 2017
 #
-
-#!/bin/sh
 # Enable command traces
 set -x
 # Exit on error

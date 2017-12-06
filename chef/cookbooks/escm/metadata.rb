@@ -1,7 +1,3 @@
-#
-# Copyright FUJITSU LIMITED 2017
-#
-
 name "escm"
 maintainer "EST"
 maintainer_email "arkadiusz.kowalczyk@ts.fujistu.com"
