@@ -297,6 +297,16 @@ ruby_block "get_escm_secrets" do
     action :create
 end
 
+ruby_block "get_keystone_url" do
+    block do
+      Chef::Resource::RubyBlock.send(:include, Chef::Mixin::ShellOut)
+	  command = "#{openstack_cmd} endpoint list --service keystone --interface public | grep keystone | awk -F '|' '{print $8}'
+      command_out = shell_out(command)
+      keystone_settings["internal_auth_url"] = command_out.stdout.strip
+    end
+    action :create
+end
+
 var_no_proxy = node[:escm][:proxy][:no_proxy].empty? ? "#{node[:escm][:proxy][:no_proxy_default]},#{node[:escm][:openstack][:instance_stack][:ip_appserver]}" : "#{node[:escm][:proxy][:no_proxy_default]},#{node[:escm][:openstack][:instance_stack][:ip_appserver]},#{node[:escm][:proxy][:no_proxy]}"
 var_key_secret = "#{node[:escm][:openstack][:instance_stack][:key_secret]}"
 var_host_fqdn = node[:escm][:ssl][:fqdn].empty? ? "#{node[:escm][:openstack][:instance_stack][:ip_appserver]}" : "#{node[:escm][:ssl][:fqdn]}"
@@ -318,7 +328,8 @@ template "#{escm_install_path}/var.env" do
     host_fqdn: var_host_fqdn,
     db_pwd_core: var_db_pwd_core,
     db_pwd_app: var_db_pwd_app,
-    db_superpwd: var_db_superpwd
+    db_superpwd: var_db_superpwd,
+    os_keystone_url = keystone_settings["internal_auth_url"]
   )
 end
 
