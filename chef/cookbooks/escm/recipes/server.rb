@@ -319,9 +319,9 @@ template "#{escm_install_path}/var.env" do
     db_pwd_core: var_db_pwd_core,
     db_pwd_app: var_db_pwd_app,
     db_superpwd: var_db_superpwd,
-    os_keystone_url = keystone_settings["internal_auth_url"],
-    os_user = node[:escm][:keystone][:user],
-	os_password = node[:escm][:keystone][:password]
+    os_keystone_url: keystone_settings["internal_auth_url"],
+    os_user: node[:escm][:keystone][:user],
+	os_password: node[:escm][:keystone][:password]
   )
 end
 
