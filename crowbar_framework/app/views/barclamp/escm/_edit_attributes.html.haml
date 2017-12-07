@@ -137,19 +137,6 @@
       #dockerauth_container
         = string_field %w(docker user)
         = password_field %w(docker password)
-
-    %fieldset
-      %legend
-        = t(".sample_data_settings")
-        
-      = boolean_field %w(sample_data load),
-        "data-showit" => "true",
-        "data-showit-target" => "#sample_data_container",
-        "data-showit-direct" => "true"
-
-      #sample_data_container
-        = string_field %w(sample_data user)
-        = password_field %w(sample_data password)
         
     %fieldset
       %legend
