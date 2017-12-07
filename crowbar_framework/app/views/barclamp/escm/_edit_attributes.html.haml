@@ -1,4 +1,99 @@
 = attributes_for @proposal do
+  :javascript
+    $( document ).ready(function() {
+      var selectedOption = '';
+      var cookieValue = getCookie();
+
+      if (cookieValue == '') {
+        $("html").prepend($(".overlay"));
+        var top = ($(window).height() - 400) / 2;
+        var left = ($(window).width() - $("#Terms").width()) / 2;
+        $("#Terms").css({top: top, left: left});
+        $(".overlay").show();
+      }
+      var continueBut = $("#ContinueButton");
+      continueBut.prop('disabled', true);
+
+      $(".radio-option > input").click(function() {
+        selectedOption = $(this).val();
+        continueBut.prop('disabled', false);
+      });
+
+      continueBut.click(function() {
+        console.info(selectedOption);
+        if (selectedOption != '') {
+          putCookie(selectedOption);
+        }
+        $(".overlay").hide();
+      });
+
+    });
+
+    function putCookie(c_val) {
+      var t = new Date();
+      // expire after one year
+      t.setTime(t.getTime() + (365 * 24 * 60 * 60 * 1000));
+      var exp_str = "expires=" + t.toUTCString();
+      document.cookie = "SupportOption=" + c_val + ";" + exp_str + ";path=/";
+    }
+
+    function getCookie() {
+      var c_str = document.cookie.split(';');
+      var co = document.cookie;
+      var c_name = "SupportOption=";
+
+      for (var i = 0; i < c_str.length; i++) {
+        var ch = c_str[i];
+        while (ch.charAt(0) == ' ') {
+          ch = ch.substring(1);
+        }
+        if (ch.indexOf(c_name) == 0) {
+          var val = ch.substring(c_name.length, ch.length);
+          return val;
+        }
+      }
+      return "";
+    };
+
+  .overlay
+    .popup.panel.panel-default{ :id => "Terms"}
+      .panel-heading
+        %span
+          = "Terms and Conditions"
+      .popup-content
+        .radio-option
+          %input{ :type => "radio", :name =>"support", :value => "90DaysFree" }
+          %span.radio-desc
+            = "Get 90 days free support, if you register"
+          %a{ :href => "https://openservicecatalogmanager.org/ui/", :target => "_blank" } here
+        .radio-option
+          %input{ :type => "radio", :name =>"support", :value => "NoSupport" }
+          %span.radio-desc
+            = "Get ESCM free of charge without any support and update right"
+        .radio-option
+          %input{ :type => "radio", :name =>"support", :value => "CommercialSupport" }
+          %span.radio-desc
+            = "Contact"
+          %a.radio-desc{ :href => "mailto:sales@est.fujitsu.com"} sales@est.fujitsu.com
+          %span.radio-desc
+            = "for commercial support"
+        %textarea
+          :preserve
+            test
+        .button-panel.btn-group.pull-right
+          %a.btn.btn-default.cancel{ :id => "BackButton", :href => "/crowbar/modules/1.0" } Back
+          %input.btn.btn-default.save{ :type => "button", :value => "Continue", :id => "ContinueButton" }
+
+  %style{:type => "text/css"}
+    ==.overlay {z-index: 10000; text-align:center; position: absolute; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: none; }
+    ==.popup {position: fixed; background-color: menu; width: 400px;font-size: 12px; text-align: justify; padding-bottom: 10px;}
+    ==.panel-heading > span {margin-left: 5px; font-size: 18px;}
+    ==.popup-content {padding: 10px;}
+    ==.popup-content > textarea {width: 100%; height: 150px; font-family: Tahoma; font-size: 12px; margin: 10px 0 10px 0; resize: none;}
+    ==.radio-option > input {display: block; float: left;}
+    ==.radio-option {height: 30px; padding: 5px 0;}
+    ==.radio-desc {display: block; float: left; padding: 2px;}
+    ==.radio-option > a {display: block; padding: 2px;}
   .panel-sub
     = header show_raw_deployment?, true
 
@@ -43,6 +138,19 @@
         = string_field %w(docker user)
         = password_field %w(docker password)
 
+    %fieldset
+      %legend
+        = t(".sample_data_settings")
+        
+      = boolean_field %w(sample_data load),
+        "data-showit" => "true",
+        "data-showit-target" => "#sample_data_container",
+        "data-showit-direct" => "true"
+
+      #sample_data_container
+        = string_field %w(sample_data user)
+        = password_field %w(sample_data password)
+        
     %fieldset
       %legend
         = t(".proxy_settings")
