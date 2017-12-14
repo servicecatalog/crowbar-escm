@@ -15,6 +15,7 @@
 #
 
 escm_project = node[:escm][:keystone][:project]
+escm_project_id = ""
 escm_user = node[:escm][:keystone][:user]
 escm_password = node[:escm][:keystone][:password]
 escm_ssl_certfile = node[:escm][:ssl][:certfile]
@@ -300,8 +301,9 @@ end
 ruby_block "get_escm_project_id" do
     block do
       Chef::Resource::RubyBlock.send(:include, Chef::Mixin::ShellOut)
-      command = "#{openstack_cmd} project show -c id -f value #{escm_project}
-      node[:escm][:keystone][:project][:id] = command_out.stdout.strip
+      command = "#{openstack_cmd} project show -c id -f value #{escm_project}"
+      command_out = shell_out(command)
+      escm_project_id = command_out.stdout.strip
     end
     action :create
 end
@@ -312,7 +314,7 @@ var_host_fqdn = node[:escm][:ssl][:fqdn].empty? ? "#{node[:escm][:openstack][:in
 var_db_pwd_core = "#{node[:escm][:openstack][:instance_stack][:db_core_password]}"
 var_db_pwd_app = "#{node[:escm][:openstack][:instance_stack][:db_app_password]}"
 var_db_superpwd = "#{node[:escm][:openstack][:instance_stack][:db_password]}"
-var_escm_project_id = "#{node[:escm][:keystone][:project][:id]}"
+var_escm_project_id = "#{escm_project_id}"
 
 template "#{escm_install_path}/var.env" do
   source "var.env.erb"
