@@ -330,12 +330,9 @@ template "#{escm_install_path}/var.env" do
     db_pwd_app: var_db_pwd_app,
     db_superpwd: var_db_superpwd,
     os_keystone_url: keystone_settings["public_auth_url"],
-    os_admin_user: keystone_settings["admin_user"],
-    os_admin_pwd: keystone_settings["admin_password"],
-    os_admin_tenant: keystone_settings["admin_tenant"],
-    os_user: node[:escm][:keystone][:user],
-	os_password: node[:escm][:keystone][:password],
-	os_tenant_id: escm_project_id	
+    os_user: keystone_settings["admin_user"],
+    os_pwd: keystone_settings["admin_password"],
+    os_domain: keystone_settings["admin_domain"]
   )
 end
 
