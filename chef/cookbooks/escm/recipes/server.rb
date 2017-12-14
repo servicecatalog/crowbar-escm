@@ -15,7 +15,6 @@
 #
 
 escm_project = node[:escm][:keystone][:project]
-escm_project_id = ""
 escm_user = node[:escm][:keystone][:user]
 escm_password = node[:escm][:keystone][:password]
 escm_ssl_certfile = node[:escm][:ssl][:certfile]
@@ -314,7 +313,6 @@ var_host_fqdn = node[:escm][:ssl][:fqdn].empty? ? "#{node[:escm][:openstack][:in
 var_db_pwd_core = "#{node[:escm][:openstack][:instance_stack][:db_core_password]}"
 var_db_pwd_app = "#{node[:escm][:openstack][:instance_stack][:db_app_password]}"
 var_db_superpwd = "#{node[:escm][:openstack][:instance_stack][:db_password]}"
-var_escm_project_id = "#{escm_project_id}"
 
 template "#{escm_install_path}/var.env" do
   source "var.env.erb"
@@ -331,10 +329,13 @@ template "#{escm_install_path}/var.env" do
     db_pwd_core: var_db_pwd_core,
     db_pwd_app: var_db_pwd_app,
     db_superpwd: var_db_superpwd,
-    os_keystone_url: keystone_settings["internal_auth_url"],
+    os_keystone_url: keystone_settings["public_auth_url"],
+    os_admin_user: keystone_settings["admin_user"],
+    os_admin_pwd: keystone_settings["admin_password"],
+    os_admin_tenant: keystone_settings["admin_tenant"],
     os_user: node[:escm][:keystone][:user],
 	os_password: node[:escm][:keystone][:password],
-	os_tenant_id: var_escm_project_id
+	os_tenant_id: escm_project_id	
   )
 end
 
