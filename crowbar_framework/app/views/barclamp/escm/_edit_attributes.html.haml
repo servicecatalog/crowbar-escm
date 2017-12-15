@@ -34,13 +34,13 @@
       // expire after one year
       t.setTime(t.getTime() + (365 * 24 * 60 * 60 * 1000));
       var exp_str = "expires=" + t.toUTCString();
-      document.cookie = "SupportOption=" + c_val + ";" + exp_str + ";path=/";
+      document.cookie = "ESCMSupportOption=" + c_val + ";" + exp_str + ";path=/";
     }
 
     function getCookie() {
       var c_str = document.cookie.split(';');
       var co = document.cookie;
-      var c_name = "SupportOption=";
+      var c_name = "ESCMSupportOption=";
 
       for (var i = 0; i < c_str.length; i++) {
         var ch = c_str[i];
@@ -59,13 +59,13 @@
     .popup.panel.panel-default{ :id => "Terms"}
       .panel-heading
         %span
-          = "Terms and Conditions"
+          = "Your Support Options"
       .popup-content
         .radio-option
           %input{ :type => "radio", :name =>"support", :value => "90DaysFree" }
           %span.radio-desc
             = "Get 90 days free support, if you register"
-          %a{ :href => "https://openservicecatalogmanager.org/ui/", :target => "_blank" } here
+          %a{ :href => "https://openservicecatalogmanager.org/ui/escm-registration.html", :target => "_blank" } here
         .radio-option
           %input{ :type => "radio", :name =>"support", :value => "NoSupport" }
           %span.radio-desc
@@ -77,9 +77,6 @@
           %a.radio-desc{ :href => "mailto:sales@est.fujitsu.com"} sales@est.fujitsu.com
           %span.radio-desc
             = "for commercial support"
-        %textarea
-          :preserve
-            test
         .button-panel.btn-group.pull-right
           %a.btn.btn-default.cancel{ :id => "BackButton", :href => "/crowbar/modules/1.0" } Back
           %input.btn.btn-default.save{ :type => "button", :value => "Continue", :id => "ContinueButton" }
@@ -89,7 +86,6 @@
     ==.popup {position: fixed; background-color: menu; width: 400px;font-size: 12px; text-align: justify; padding-bottom: 10px;}
     ==.panel-heading > span {margin-left: 5px; font-size: 18px;}
     ==.popup-content {padding: 10px;}
-    ==.popup-content > textarea {width: 100%; height: 150px; font-family: Tahoma; font-size: 12px; margin: 10px 0 10px 0; resize: none;}
     ==.radio-option > input {display: block; float: left;}
     ==.radio-option {height: 30px; padding: 5px 0;}
     ==.radio-desc {display: block; float: left; padding: 2px;}
