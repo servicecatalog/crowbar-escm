@@ -51,8 +51,8 @@
         "auth": false,
         "user": "",
         "password": "",
-        "organization": "servicecatalog",
-        "tag": "v17.5.0"
+        "organization": "fest",
+        "tag": "latest"
       },
       "proxy": {
         "use_proxy": false,
