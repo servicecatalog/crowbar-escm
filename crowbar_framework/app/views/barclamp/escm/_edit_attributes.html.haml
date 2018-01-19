@@ -61,6 +61,14 @@
         %span
           = "Your Support Options"
       .popup-content
+      .info
+        %p
+          By using this software you agree to <a href="https://openservicecatalogmanager.org/ui/license-info.html" target=_blank">this license</a>.
+        %p
+          For installation and usage instructions please refer to <a href="https://github.com/servicecatalog/documentation/blob/ESCM/Manuals/DeploymentGuide/Deployment%20Guide.md" target="_blank">this documentation</a>.
+        %hr
+        %p
+          Please choose your desired support option and click "Continue".
         .radio-option
           %input{ :type => "radio", :name =>"support", :value => "90DaysFree" }
           %span.radio-desc
@@ -83,7 +91,7 @@
 
   %style{:type => "text/css"}
     ==.overlay {z-index: 10000; text-align:center; position: absolute; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: none; }
-    ==.popup {position: fixed; background-color: menu; width: 400px;font-size: 12px; text-align: justify; padding-bottom: 10px;}
+    ==.popup {position: fixed; background-color: menu; width: 450px;font-size: 12px; text-align: justify; padding-bottom: 10px;}
     ==.panel-heading > span {margin-left: 5px; font-size: 18px;}
     ==.popup-content {padding: 10px;}
     ==.radio-option > input {display: block; float: left;}
