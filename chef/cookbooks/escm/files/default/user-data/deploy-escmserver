@@ -10,6 +10,7 @@ set -e
 
 # Variables for this script
 CONFIG_BASE=/etc/escm
+LOCK_FILE=${CONFIG_BASE}/deploy-escmserver.lock
 SSL_CONFIG_PATH=${CONFIG_BASE}/ssl
 COMPOSE_CONFIG_PATH=${CONFIG_BASE}/docker-compose
 DOCKER_PATH=/docker
@@ -20,6 +21,14 @@ UPDATE_NECESSARY_CERTS=true
 exec &>> ${DOCKER_PATH}/logs/setup-machine-$(date '+%Y-%m-%d').log
 
 echo "$(date '+%Y-%m-%d %H:%M:%S') starting setup..."
+
+# Check whether another instance of this script is already running
+if [ ! -f ${LOCK_FILE} ]; then
+    touch ${LOCK_FILE}
+else
+    echo "$(date '+%Y-%m-%d %H:%M:%S') lock file is already present - aborting..."
+    exit 0
+fi
 
 # Check if update is necessary
 if [ -f ${DOCKER_PATH}/var.env.old ]; then
@@ -36,6 +45,7 @@ fi
 
 if [ ${UPDATE_NECESSARY_CONFIG} == "false" ] && [ ${UPDATE_NECESSARY_CERTS} == "false" ]; then
     echo "$(date '+%Y-%m-%d %H:%M:%S') configuration not changed - aborting..."
+    rm -f ${LOCK_FILE}
     exit 0
 fi
 
@@ -50,6 +60,7 @@ set +a
 # If mandatory variables are unset, abort
 if [ -z ${DB_PWD_CORE} ] || [ -z ${DB_PWD_APP} ] || [ -z ${KEY_SECRET} ] || [ -z ${HOST_FQDN} ] || [ -z ${DB_SUPERPWD} ]; then
     echo "$(date '+%Y-%m-%d %H:%M:%S') Mandatory variables unset - aborting."
+    rm -f ${LOCK_FILE}
     exit 0
 fi
 
@@ -181,5 +192,8 @@ docker run --name deployer-init-start --rm -v ${DOCKER_PATH}:/target -v /var/run
 
 # Backup the current configuration for update check by the next run
 cp ${DOCKER_PATH}/var.env ${DOCKER_PATH}/var.env.old
+
+# Remove lock file
+rm -f ${LOCKFILE}
 
 echo "$(date '+%Y-%m-%d %H:%M:%S') setup finished."
