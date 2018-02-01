@@ -161,6 +161,9 @@ if [ -f ${COMPOSE_CONFIG_PATH}/var.env ]; then
     cp ${COMPOSE_CONFIG_PATH}/var.env ${DOCKER_PATH}
 fi
 
+# Pull latest deployer image
+docker pull ${IMAGE_DEPLOYER}
+
 # Create Docker directory structure and Docker Compose files
 pushd ${DOCKER_PATH}
 docker run --name deployer-directories-compose --rm -v ${DOCKER_PATH}:/target ${IMAGE_DEPLOYER}
