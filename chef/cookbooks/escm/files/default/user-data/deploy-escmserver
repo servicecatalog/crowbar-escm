@@ -197,6 +197,6 @@ docker run --name deployer-init-start --rm -v ${DOCKER_PATH}:/target -v /var/run
 cp ${DOCKER_PATH}/var.env ${DOCKER_PATH}/var.env.old
 
 # Remove lock file
-rm -f ${LOCKFILE}
+rm -f ${LOCK_FILE}
 
 echo "$(date '+%Y-%m-%d %H:%M:%S') setup finished."
